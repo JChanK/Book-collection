@@ -1,5 +1,5 @@
 # Диаграмма вариантов использования
-(https://github.com/JChanK/Book-collection/blob/main/docs/images/UseCaseDiagram.png)
+![Диаграмма вариантов использования](https://github.com/JChanK/Book-collection/blob/main/docs/Diagrams/images/UseCaseDiagram.png)
 
 ## Глоссарий
 | Термин | Определение |
