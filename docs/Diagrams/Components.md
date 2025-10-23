@@ -54,7 +54,7 @@
 
 <a name="diagram"/>
 
-## 3. Диаграмма компонентов (PlantUML)
+## 3. Диаграмма компонентов
 
 **Изображение:**  
 ![Диаграмма компонентов — BookTracker](https://github.com/JChanK/Book-collection/blob/main/docs/Diagrams/images/components_diagram.png)
