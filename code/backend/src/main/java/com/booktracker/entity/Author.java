@@ -1,8 +1,6 @@
 package com.booktracker.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -10,9 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "authors", indexes = {
-        @Index(name = "idx_author_name", columnList = "name")
-})
+@Table(name = "authors")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Author {
@@ -21,17 +17,34 @@ public class Author {
     @EqualsAndHashCode.Include
     private Long id;
 
-    @NotBlank
-    @Size(max = 255)
-    @Column(name = "name", nullable = false, length = 255)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "bio", columnDefinition = "TEXT")
-    private String bio;
+    @Column(name = "biography", columnDefinition = "TEXT") // Исправлено с bio на biography
+    private String biography;
 
-    @Column(name = "photo_url", length = 500)
+    @Column(name = "birth_year")
+    private Integer birthYear;
+
+    @Column(name = "death_year")
+    private Integer deathYear;
+
+    @Column(name = "nationality")
+    private String nationality;
+
+    @Column(name = "photo_url")
     private String photoUrl;
 
-    @ManyToMany(mappedBy = "authors", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "authors")
     private Set<Book> books = new HashSet<>();
+
+    // Геттер для обратной совместимости
+    public String getBio() {
+        return biography;
+    }
+
+    // Сеттер для обратной совместимости
+    public void setBio(String bio) {
+        this.biography = bio;
+    }
 }

@@ -62,7 +62,7 @@ public class ReviewService {
 
     private ReviewDTO convertToDTO(Review review) {
         ReviewDTO dto = modelMapper.map(review, ReviewDTO.class);
-        dto.setUserName(review.getUser().getDisplayName());
+        dto.setUserName(review.getUser().getUsername());
         dto.setBookId(review.getBook().getId());
         return dto;
     }

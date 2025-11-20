@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -32,10 +34,12 @@ public class User {
     @Size(max = 120)
     private String password;
 
+    @Getter
+    @Setter
     @NotBlank
     @Size(max = 50)
-    @Column(name = "display_name")
-    private String displayName;
+    @Column(unique = true, name = "username")
+    private String username;
 
     @Column(name = "register_date")
     private LocalDateTime registerDate;
@@ -46,8 +50,17 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews = new HashSet<>();
 
+    @Getter
+    @Column(name = "avatar_url", length = 500)
+    private String avatarUrl;
+
     @PrePersist
     protected void onCreate() {
         registerDate = LocalDateTime.now();
+        if (this.avatarUrl == null) {
+            this.avatarUrl = String.format("https://ui-avatars.com/api/?name=%s&background=random&color=fff&size=256",
+                    this.username.replace(" ", "+"));
+        }
     }
+
 }

@@ -33,7 +33,7 @@ public class AuthService {
 
         User user = userService.findByEmail(authRequest.getEmail());
 
-        return new AuthResponse(jwt, "Bearer", user.getId(), user.getEmail(), user.getDisplayName());
+        return new AuthResponse(jwt, "Bearer", user.getId(), user.getEmail(), user.getUsername());
     }
 
     public AuthResponse registerUser(User user) {

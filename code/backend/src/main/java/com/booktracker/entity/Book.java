@@ -28,14 +28,26 @@ public class Book {
     @Column(name = "isbn", length = 20)
     private String isbn;
 
-    @Column(name = "publication_year") // Измените с year на publication_year
-    private Integer publicationYear;
+    @Column(name = "year") // Исправлено: в БД поле называется "year", а не "publication_year"
+    private Integer year;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "cover_url", length = 500)
     private String coverUrl;
+
+    @Column(name = "pages")
+    private Integer pages;
+
+    @Column(name = "chapters")
+    private Integer chapters;
+
+    @Column(name = "average_rating")
+    private Double averageRating;
+
+    @Column(name = "ratings_count")
+    private Integer ratingsCount;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -59,15 +71,22 @@ public class Book {
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CollectionEntry> collectionEntries = new HashSet<>();
 
-    @Transient
-    public Double getAverageRating() {
-        if (reviews == null || reviews.isEmpty()) {
-            return 0.0;
-        }
-        return reviews.stream()
-                .filter(review -> review.getRating() != null && review.getStatus() == ReviewStatus.APPROVED)
-                .mapToInt(Review::getRating)
-                .average()
-                .orElse(0.0);
+    // Геттер для обратной совместимости
+    public Integer getPublicationYear() {
+        return year;
+    }
+
+    // Сеттер для обратной совместимости
+    public void setPublicationYear(Integer publicationYear) {
+        this.year = publicationYear;
+    }
+
+    // Дополнительный геттер для удобства
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 }

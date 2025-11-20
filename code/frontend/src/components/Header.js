@@ -9,23 +9,27 @@ export class Header {
             <header class="header">
                 <div class="container">
                     <nav class="nav">
-                        <div class="logo">BookTracker</div>
-                        <ul class="nav-links">
-                            <li><a href="#/" class="nav-link ${location.hash === '#/' ? 'active' : ''}">Home</a></li>
-                            <li><a href="#/books" class="nav-link ${location.hash === '#/books' ? 'active' : ''}">Books</a></li>
-                            <li><a href="#/authors" class="nav-link ${location.hash === '#/authors' ? 'active' : ''}">Authors</a></li>
+                        <div class="logo" onclick="app.navigateToHome()" style="cursor: pointer;">
+                            BookTracker
+                        </div>
+                        <div class="nav-center">
+                            <button class="nav-btn" onclick="app.navigateToCatalog()">Catalog</button>
+                            <button class="nav-btn" onclick="app.navigateToSearch()">Search</button>
+                        </div>
+                        <div class="nav-right">
                             ${this.isLoggedIn ? `
-                                <li><a href="#/collection" class="nav-link ${location.hash === '#/collection' ? 'active' : ''}">My Collection</a></li>
-                                <li><a href="#/profile" class="nav-link ${location.hash === '#/profile' ? 'active' : ''}">Profile</a></li>
-                            ` : ''}
-                        </ul>
-                        <div class="auth-buttons">
-                            ${this.isLoggedIn ? `
-                                <span>Welcome, ${this.user.displayName}</span>
-                                <button class="btn btn-secondary" onclick="app.logout()">Logout</button>
+                                <div class="user-avatar" onclick="app.toggleUserMenu()">
+                                    <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(this.user.displayName || 'User')}&background=random" 
+                                         alt="${this.user.displayName}" class="avatar-img">
+                                    <div class="user-menu" id="userMenu">
+                                        <a href="#/profile">Profile</a>
+                                        <a href="#/collection">My Collection</a>
+                                        <button onclick="app.logout()">Logout</button>
+                                    </div>
+                                </div>
                             ` : `
-                                <a href="#/login" class="btn btn-secondary">Login</a>
-                                <a href="#/register" class="btn btn-primary">Register</a>
+                                <button class="nav-btn" onclick="app.navigateToAuth('signin')">Sign In</button>
+                                <button class="nav-btn primary" onclick="app.navigateToAuth('signup')">Log In</button>
                             `}
                         </div>
                     </nav>
